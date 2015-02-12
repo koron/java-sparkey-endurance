@@ -1,1 +1,9 @@
 # Endurance test for Sparkey-java
+
+Run `gradle run` twice to execute the test.
+It will prepare data files at first then inifite query at second.
+
+    $ gradle run
+    $ gradle run
+
+To clean data files remove `var/sparkey-data` directory.
