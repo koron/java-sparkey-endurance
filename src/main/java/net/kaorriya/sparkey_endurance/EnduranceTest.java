@@ -67,9 +67,35 @@ public class EnduranceTest {
         }
     }
 
-    private void test() {
-        // TODO:
-        System.out.println("Test");
+    private void test() throws Exception {
+        int n = 0;
+        while (true) {
+            System.out.print("\rset #" + Integer.toString(n) + " testing...");
+            testOne(n);
+            if (++n >= setCount) {
+                n = 0;
+            }
+        }
+    }
+
+    private void testOne(int n) throws Exception {
+        SparkeyReader r = Sparkey.open(getBaseFile(n));
+        try {
+            queries(r);
+        } finally {
+            r.close();
+        }
+    }
+
+    private void queries(SparkeyReader reader) throws Exception {
+        Random r = new Random();
+        long startAt = System.nanoTime();
+        while (System.nanoTime() - startAt < 1000000000) {
+            byte[] key = getKey(0, r.nextInt(setSize));
+            if (reader.getAsByteArray(key) == null) {
+                throw new Exception("can't find a key");
+            }
+        }
     }
 
     private File getBaseFile(int n) {
