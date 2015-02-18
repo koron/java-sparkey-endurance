@@ -13,7 +13,8 @@ public class EnduranceTest {
     private int setCount = 100;
     private int setSize = 100000;
     private int keyLen = 128;
-    private int valueLen = 128;
+    private int valueLen = 1280;
+    private long queryDuration = 2000000000;
 
     private int keySeed = -1;
     private byte[][] keyArray = null;
@@ -90,7 +91,7 @@ public class EnduranceTest {
     private void queries(SparkeyReader reader) throws Exception {
         Random r = new Random();
         long startAt = System.nanoTime();
-        while (System.nanoTime() - startAt < 1000000000) {
+        while (System.nanoTime() - startAt < queryDuration) {
             byte[] key = getKey(0, r.nextInt(setSize));
             if (reader.getAsByteArray(key) == null) {
                 throw new Exception("can't find a key");
